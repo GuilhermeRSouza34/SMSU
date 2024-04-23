@@ -38,7 +38,26 @@ function verificarValoresAusentesPoluicaoAr(dadosPoluicaoAr) {
   return valoresAusentes;
 }
 
+// Função para preencher valores ausentes com a média ou mediana dos valores existentes
+function preencherValoresAusentesPoluicaoAr(dadosPoluicaoAr) {
+  const valoresPreenchidos = { ...dadosPoluicaoAr };
+  
+  const valoresValidos = Object.values(dadosPoluicaoAr).filter(value => !isNaN(value));
+  const media = valoresValidos.reduce((acc, curr) => acc + curr, 0) / valoresValidos.length;
+  // Ou, se preferir, use a mediana:
+  // const mediana = valoresValidos.sort((a, b) => a - b)[Math.floor(valoresValidos.length / 2)];
+
+  for (const key in valoresPreenchidos) {
+    if (isNaN(valoresPreenchidos[key])) {
+      valoresPreenchidos[key] = media; // Ou mediana, se preferir
+    }
+  }
+
+  return valoresPreenchidos;
+}
+
 module.exports = {
   inserirDadosPoluicaoAr,
   verificarValoresAusentesPoluicaoAr,
+  preencherValoresAusentesPoluicaoAr
 };
