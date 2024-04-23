@@ -25,40 +25,20 @@ async function inserirDadosPoluicaoAr(particulasPM25, particulasPM10, ozonio, di
   }
 }
 
-// Função para inserir dados de qualidade da água no banco de dados
-async function inserirDadosQualidadeAgua(ph, cloro, fluor) {
-  const query = {
-    text: `INSERT INTO qualidade_agua (ph, cloro, fluor)
-           VALUES ($1, $2, $3)`,
-    values: [ph, cloro, fluor],
-  };
+// Função para verificar valores ausentes nas medidas de poluição do ar
+function verificarValoresAusentesPoluicaoAr(dadosPoluicaoAr) {
+  const valoresAusentes = {};
 
-  try {
-    await pool.query(query);
-    console.log('Dados de qualidade da água inseridos com sucesso!');
-  } catch (error) {
-    console.error('Erro ao inserir dados de qualidade da água:', error);
+  for (const [key, value] of Object.entries(dadosPoluicaoAr)) {
+    if (value === null || value === undefined || isNaN(value)) {
+      valoresAusentes[key] = true;
+    }
   }
-}
 
-// Função para inserir dados de ruído urbano no banco de dados
-async function inserirDadosRuidoUrbano(nivelDecibeis) {
-  const query = {
-    text: `INSERT INTO ruido_urbano (nivel_decibeis)
-           VALUES ($1)`,
-    values: [nivelDecibeis],
-  };
-
-  try {
-    await pool.query(query);
-    console.log('Dados de ruído urbano inseridos com sucesso!');
-  } catch (error) {
-    console.error('Erro ao inserir dados de ruído urbano:', error);
-  }
+  return valoresAusentes;
 }
 
 module.exports = {
   inserirDadosPoluicaoAr,
-  inserirDadosQualidadeAgua,
-  inserirDadosRuidoUrbano,
+  verificarValoresAusentesPoluicaoAr,
 };
