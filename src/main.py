@@ -38,14 +38,24 @@ def calcular_estatisticas(conn):
         min_ruido_urbano = min(ruido_urbano)
         print(f"Estatísticas do Ruído Urbano - Média: {media_ruido_urbano}, Desvio Padrão: {desvio_padr_ruido_urbano}, Máximo: {max_ruido_urbano}, Mínimo: {min_ruido_urbano}")
 
-def main():
-    conn = sqlite3.connect('dados_ambientais.db')
+def analisar_dados_politicas_publicas(poluicao_ar, qualidade_agua, ruido_urbano):
+    # Lógica para análise dos dados e fornecimento de insights para políticas públicas
+    # Por exemplo, identificar áreas com alta poluição do ar e recomendar medidas de controle de emissões
+
+    def gerar_relatorio_analise_dados(poluicao_ar, qualidade_agua, ruido_urbano):
+    # Gerar um relatório com os resultados da análise dos dados e possíveis recomendações para políticas públicas
+    # O relatório pode incluir gráficos, tabelas e texto explicativo sobre os dados e suas implicações
+
+        def main():
+            conn = sqlite3.connect('dados_ambientais.db')
     
     while True:
         poluicao_ar, qualidade_agua, ruido_urbano = coletar_dados()
         armazenar_dados(conn, poluicao_ar, qualidade_agua, ruido_urbano)
         print(f"Dados coletados - Poluição do Ar: {poluicao_ar}, Qualidade da Água: {qualidade_agua}, Ruído Urbano: {ruido_urbano}")
         calcular_estatisticas(conn)  # Calcular estatísticas a cada coleta de dados
+        analisar_dados_politicas_publicas(poluicao_ar, qualidade_agua, ruido_urbano)  # Analisar dados para políticas públicas
+        gerar_relatorio_analise_dados(poluicao_ar, qualidade_agua, ruido_urbano)  # Gerar relatório de análise de dados
         time.sleep(60)  # Coleta a cada 1 minuto
 
 if __name__ == "__main__":
