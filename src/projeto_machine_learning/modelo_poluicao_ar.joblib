@@ -1,0 +1,26 @@
+import joblib
+
+# Carregamento do modelo treinado
+modelo_carregado = joblib.load('modelo_poluicao_ar.joblib')
+
+# Função para fazer previsão com base na hora inserida pelo usuário
+def fazer_previsao():
+    while True:
+        # Solicita ao usuário para inserir a hora desejada
+        hora_previsao = input("Insira a hora para previsão (0-23), ou 'sair' para encerrar: ")
+
+        # Verifica se o usuário deseja sair
+        if hora_previsao.lower() == 'sair':
+            print("Encerrando o programa...")
+            break
+
+        # Verifica se a entrada é um número entre 0 e 23
+        if not hora_previsao.isdigit() or int(hora_previsao) < 0 or int(hora_previsao) > 23:
+            print("Hora inserida inválida. Por favor, insira um valor entre 0 e 23.")
+        else:
+            # Fazendo previsões com o modelo
+            previsao = modelo_carregado.predict([[int(hora_previsao)]])
+            print(f"Previsão de qualidade do ar às {hora_previsao} horas: {previsao[0]:.2f}")
+
+# Chamada da função para fazer previsões
+fazer_previsao()
