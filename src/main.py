@@ -51,12 +51,12 @@ def analisar_dados_politicas_publicas(poluicao_ar, qualidade_agua, ruido_urbano)
     
     while True:
         poluicao_ar, qualidade_agua, ruido_urbano = coletar_dados()
-        armazenar_dados(conn, poluicao_ar, qualidade_agua, ruido_urbano)
+        armazenar_dados(conn, poluicao_ar, qualidade_agua, ruido_urbano) # type: ignore
         print(f"Dados coletados - Poluição do Ar: {poluicao_ar}, Qualidade da Água: {qualidade_agua}, Ruído Urbano: {ruido_urbano}")
-        calcular_estatisticas(conn)  # Calcular estatísticas a cada coleta de dados
+        calcular_estatisticas(conn)  # type: ignore # Calcular estatísticas a cada coleta de dados
         analisar_dados_politicas_publicas(poluicao_ar, qualidade_agua, ruido_urbano)  # Analisar dados para políticas públicas
         gerar_relatorio_analise_dados(poluicao_ar, qualidade_agua, ruido_urbano)  # Gerar relatório de análise de dados
         time.sleep(60)  # Coleta a cada 1 minuto
 
 if __name__ == "__main__":
-    main()
+    main() # type: ignore
